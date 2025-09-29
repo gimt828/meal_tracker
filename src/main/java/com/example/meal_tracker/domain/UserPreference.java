@@ -26,7 +26,4 @@ public class UserPreference {
 
     // 예시: "닭가슴살", "계란" 등
     private String preferredFood;
-
-    // 예시: "갑각류", "유제품" 등
-    private String dislikedFood;
 }

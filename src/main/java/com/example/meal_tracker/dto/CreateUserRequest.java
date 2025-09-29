@@ -12,4 +12,5 @@ public class CreateUserRequest {
     private Double weight;
     private LocalDate birthDate;
     private String gender;
+    private String dietGoal; // ✅ 이 필드를 추가했습니다.
 }

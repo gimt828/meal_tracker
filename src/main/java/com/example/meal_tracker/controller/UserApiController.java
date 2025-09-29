@@ -1,4 +1,3 @@
-
 package com.example.meal_tracker.controller;
 
 import com.example.meal_tracker.domain.User;
@@ -30,7 +29,7 @@ public class UserApiController {
 
     // ID로 사용자 조회하는 메소드 추가
     @GetMapping("/api/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) { // ✅ 이 부분이 수정되었습니다.
         User user = userService.findUserById(id);
         return ResponseEntity.ok(user);
     }
