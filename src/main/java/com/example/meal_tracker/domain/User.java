@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users") // 테이블 이름을 'user'가 아닌 'users'로 지정 (user는 예약어인 경우가 많음)
+@Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor // JPA는 기본 생성자가 꼭 필요해요!
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -33,5 +33,7 @@ public class User {
     private LocalDate birthDate; // 생년월일
 
     private String gender; // 성별
-}
 
+    @Column(name = "diet_goal") // ✅ 이 부분이 추가되었습니다.
+    private String dietGoal; // 사용자의 식단 목표 (e.g., DIET, BULK_UP)
+}

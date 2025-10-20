@@ -2,35 +2,40 @@ package com.example.meal_tracker.controller;
 
 import com.example.meal_tracker.domain.User;
 import com.example.meal_tracker.dto.CreateUserRequest;
+import com.example.meal_tracker.dto.UserResponse; // UserResponse DTO Import (추가)
 import com.example.meal_tracker.service.UserService;
+import lombok.RequiredArgsConstructor; // 롬복 Import (추가)
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-// 추가 import
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 @RestController
+@RequiredArgsConstructor // final 필드의 생성자를 자동으로 만들어줍니다.
 public class UserApiController {
 
-    private final UserService userService;
+    private final UserService userService; // final로 변경
 
-    public UserApiController(UserService userService) {
-        this.userService = userService;
-    }
+    // @RequiredArgsConstructor가 생성자를 대신합니다.
+    // public UserApiController(UserService userService) { ... }
 
     @PostMapping("/api/users")
-    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest request) {
+    // 반환 타입을 User에서 UserResponse로 변경
+    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
         User savedUser = userService.createUser(request);
-        return ResponseEntity.ok(savedUser);
+        
+        // UserResponse DTO로 변환하여 반환
+        return ResponseEntity.ok(new UserResponse(savedUser));
     }
 
-    // ID로 사용자 조회하는 메소드 추가
     @GetMapping("/api/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) { // ✅ 이 부분이 수정되었습니다.
+    // 반환 타입을 User에서 UserResponse로 변경
+    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long id) {
         User user = userService.findUserById(id);
-        return ResponseEntity.ok(user);
+        
+        // UserResponse DTO로 변환하여 반환
+        return ResponseEntity.ok(new UserResponse(user));
     }
 }

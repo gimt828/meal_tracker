@@ -4,5 +4,7 @@ import com.example.meal_tracker.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    // 이 안에 아무것도 적지 않아도 save, findById 같은 기능이 자동으로 생깁니다.
+    
+    // 닉네임으로 중복 검사를 하기 위한 메소드
+    boolean existsByNickname(String nickname);
 }
