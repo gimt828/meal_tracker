@@ -89,7 +89,7 @@ public class UserGoal {
         this.user_id = user_id;
     }
 
-    // Optional: toString() (로그 확인용)
+    // (디버깅/로그용)
     @Override
     public String toString() {
         return "UserGoal{" +
