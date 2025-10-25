@@ -1,8 +1,9 @@
 package com.everybite.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDate; // 날짜 처리를 위한 Java Time API 클래스 import.
 
 public class DailyStatisticsDto {
+    // 하루 단위의 통계 데이터를 담는 DTO 클래스 정의.
 
     private LocalDate date;          // 통계 날짜
     private double totalCaloriesIn;  // 총 섭취 칼로리
@@ -105,7 +106,7 @@ public class DailyStatisticsDto {
         this.remainingCalories = remainingCalories;
     }
 
-    //  Optional: toString() (디버깅 / 로그용)
+    //  객체 상태를 문자열로 반환 (디버깅 / 로그용)
     @Override
     public String toString() {
         return "DailyStatisticsDto{" +
