@@ -90,7 +90,7 @@ public class ExerciseRecord {
         this.exercise_type = exercise_type;
     }
 
-    // Optional: toString() (디버깅 시 유용)
+    // (디버깅/ 로그용)
     @Override
     public String toString() {
         return "ExerciseRecord{" +
