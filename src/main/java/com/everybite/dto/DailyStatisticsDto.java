@@ -14,10 +14,10 @@ public class DailyStatisticsDto {
     private double goalCalories;     // 하루 목표 칼로리
     private double remainingCalories;// 남은 칼로리 (goal - 섭취)
 
-    // ✅ 기본 생성자
+    //  기본 생성자
     public DailyStatisticsDto() {}
 
-    // ✅ 전체 필드 생성자
+    //  전체 필드 생성자
     public DailyStatisticsDto(LocalDate date, double totalCaloriesIn, double totalCaloriesOut, double netCalories,
                               double totalCarbs, double totalProtein, double totalFat,
                               double goalCalories, double remainingCalories) {
@@ -32,7 +32,7 @@ public class DailyStatisticsDto {
         this.remainingCalories = remainingCalories;
     }
 
-    // ✅ Getter / Setter
+    // Getter / Setter
     public LocalDate getDate() {
         return date;
     }
@@ -105,7 +105,7 @@ public class DailyStatisticsDto {
         this.remainingCalories = remainingCalories;
     }
 
-    // ✅ Optional: toString() (디버깅 / 로그용)
+    //  Optional: toString() (디버깅 / 로그용)
     @Override
     public String toString() {
         return "DailyStatisticsDto{" +
