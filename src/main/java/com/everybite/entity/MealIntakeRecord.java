@@ -109,7 +109,7 @@ public class MealIntakeRecord {
         this.meal_type = meal_type;
     }
 
-    // Optional: toString() (디버깅용)
+    // (디버깅/로그용)
     @Override
     public String toString() {
         return "MealIntakeRecord{" +
