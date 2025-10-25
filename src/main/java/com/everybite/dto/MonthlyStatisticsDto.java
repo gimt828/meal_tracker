@@ -1,6 +1,7 @@
 package com.everybite.dto;
 
 public class MonthlyStatisticsDto {
+    //월간 통계 데이터 관련 (Controller <-> Service 사용)
 
     private int year;               // 연도 (예: 2025)
     private int month;              // 월 (예: 10)
@@ -113,7 +114,7 @@ public class MonthlyStatisticsDto {
         this.achievementRate = achievementRate;
     }
 
-    // Optional: toString()
+    // (디버깅/로그용}
     @Override
     public String toString() {
         return "MonthlyStatisticsDto{" +
