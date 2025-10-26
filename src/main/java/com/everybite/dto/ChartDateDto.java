@@ -1,8 +1,8 @@
 package com.everybite.dto;
 
 public class ChartDataDto {
-    private String label;
-    private double value;
+    private String label; // 그래프에서 표시될 이름 (ex. 아점저간)
+    private double value; // 해당 항목의 수치값 (ex. Kcal, g 등)
 
     public ChartDataDto() {}
 
