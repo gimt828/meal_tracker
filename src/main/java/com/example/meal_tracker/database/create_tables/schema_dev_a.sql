@@ -49,7 +49,7 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.meal_record
     OWNER to postgres;
 
-    -- Table: public.user_goal
+ -- Table: public.user_goal
 
 -- DROP TABLE IF EXISTS public.user_goal;
 
@@ -61,10 +61,18 @@ CREATE TABLE IF NOT EXISTS public.user_goal
     target_calories integer NOT NULL,
     target_weight double precision NOT NULL,
     user_id bigint,
+    diet_type character varying(30) COLLATE pg_catalog."default",
+    custom_carb_ratio double precision,
+    custom_protein_ratio double precision,
+    custom_fat_ratio double precision,
     CONSTRAINT user_goal_pkey PRIMARY KEY (id),
     CONSTRAINT ukjr1bwksbeecjb2ajxtnb22loq UNIQUE (user_id),
     CONSTRAINT fkd09eq8bpxgy8p5wi7mjglujck FOREIGN KEY (user_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_goal_diet_type_fkey FOREIGN KEY (diet_type)
+        REFERENCES public.diet_profile (diet_type) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -96,7 +104,7 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.user_preference
     OWNER to postgres;
 
-    -- Table: public.users
+   -- Table: public.users
 
 -- DROP TABLE IF EXISTS public.users;
 
@@ -109,6 +117,7 @@ CREATE TABLE IF NOT EXISTS public.users
     nickname character varying(255) COLLATE pg_catalog."default" NOT NULL,
     weight double precision,
     diet_goal character varying(255) COLLATE pg_catalog."default",
+    activity_level character varying(50) COLLATE pg_catalog."default", -- <-- 이 줄이 추가된 버전입니다!
     CONSTRAINT users_pkey PRIMARY KEY (user_id),
     CONSTRAINT uk2ty1xmrrgtn89xt7kyxx6ta7h UNIQUE (nickname)
 )
@@ -116,4 +125,24 @@ CREATE TABLE IF NOT EXISTS public.users
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.users
+    OWNER to postgres;
+    
+    -- Table: public.diet_profile
+
+-- DROP TABLE IF EXISTS public.diet_profile;
+
+CREATE TABLE IF NOT EXISTS public.diet_profile
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    diet_type character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    default_carb_ratio double precision,
+    default_protein_ratio double precision,
+    default_fat_ratio double precision,
+    CONSTRAINT diet_profile_pkey PRIMARY KEY (id),
+    CONSTRAINT diet_profile_diet_type_key UNIQUE (diet_type)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.diet_profile
     OWNER to postgres;
