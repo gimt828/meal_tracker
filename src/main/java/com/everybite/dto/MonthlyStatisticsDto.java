@@ -1,133 +1,52 @@
 package com.everybite.dto;
 
 public class MonthlyStatisticsDto {
-    //월간 통계 데이터 관련 (Controller <-> Service 사용)
-
-    private int year;               // 연도 (예: 2025)
-    private int month;              // 월 (예: 10)
-    private double totalCaloriesIn; // 총 섭취 칼로리
-    private double totalCaloriesOut;// 총 소모 칼로리
-    private double netCalories;     // 총 순칼로리 (섭취 - 소모)
-    private double totalCarbs;      // 탄수화물 총합
-    private double totalProtein;    // 단백질 총합
-    private double totalFat;        // 지방 총합
-    private int goalCalories;       // 하루 목표 칼로리
-    private double achievementRate; // 달성률 (%)
+	// 월간 통계 데이터 관련
+	
+    private int year;					// 연도 (ex. 2025)
+    private int month;					// 월 (ex. 10)
+    private double total_calories_in;	// 총 섭취 칼로리
+    private double total_calories_out;  // 총 소모 칼로리
+    private double net_calories;		// 총 순칼로리 ( 섭취 - 소모)
+    private double total_carbs;			// 탄수화물 총합
+    private double total_protein;		// 단백질 총합
+    private double total_fat;			// 지방 총합
+    private double goal_calories;		// 하루 목표 칼로리
+    private double achievement_rate;	// 달성률(%)
 
     // 기본 생성자
     public MonthlyStatisticsDto() {}
 
-    // 전체 필드 생성자
-    public MonthlyStatisticsDto(int year, int month, double totalCaloriesIn, double totalCaloriesOut,
-                                double netCalories, double totalCarbs, double totalProtein,
-                                double totalFat, int goalCalories, double achievementRate) {
-        this.year = year;
-        this.month = month;
-        this.totalCaloriesIn = totalCaloriesIn;
-        this.totalCaloriesOut = totalCaloriesOut;
-        this.netCalories = netCalories;
-        this.totalCarbs = totalCarbs;
-        this.totalProtein = totalProtein;
-        this.totalFat = totalFat;
-        this.goalCalories = goalCalories;
-        this.achievementRate = achievementRate;
-    }
-
     // Getter / Setter
-    public int getYear() {
-        return year;
-    }
+    public int getYear() { return year; }
+    public void setYear(int year) { this.year = year; }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
+    public int getMonth() { return month; }
+    public void setMonth(int month) { this.month = month; }
 
-    public int getMonth() {
-        return month;
-    }
+    public double getTotal_calories_in() { return total_calories_in; }
+    public void setTotal_calories_in(double total_calories_in) { this.total_calories_in = total_calories_in; }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
+    public double getTotal_calories_out() { return total_calories_out; }
+    public void setTotal_calories_out(double total_calories_out) { this.total_calories_out = total_calories_out; }
 
-    public double getTotalCaloriesIn() {
-        return totalCaloriesIn;
-    }
+    public double getNet_calories() { return net_calories; }
+    public void setNet_calories(double net_calories) { this.net_calories = net_calories; }
 
-    public void setTotalCaloriesIn(double totalCaloriesIn) {
-        this.totalCaloriesIn = totalCaloriesIn;
-    }
+    public double getTotal_carbs() { return total_carbs; }
+    public void setTotal_carbs(double total_carbs) { this.total_carbs = total_carbs; }
 
-    public double getTotalCaloriesOut() {
-        return totalCaloriesOut;
-    }
+    public double getTotal_protein() { return total_protein; }
+    public void setTotal_protein(double total_protein) { this.total_protein = total_protein; }
 
-    public void setTotalCaloriesOut(double totalCaloriesOut) {
-        this.totalCaloriesOut = totalCaloriesOut;
-    }
+    public double getTotal_fat() { return total_fat; }
+    public void setTotal_fat(double total_fat) { this.total_fat = total_fat; }
 
-    public double getNetCalories() {
-        return netCalories;
-    }
+    public double getGoal_calories() { return goal_calories; }
+    public void setGoal_calories(double goal_calories) { this.goal_calories = goal_calories; }
 
-    public void setNetCalories(double netCalories) {
-        this.netCalories = netCalories;
-    }
+    public double getAchievement_rate() { return achievement_rate; }
+    public void setAchievement_rate(double achievement_rate) { this.achievement_rate = achievement_rate; }
+    
 
-    public double getTotalCarbs() {
-        return totalCarbs;
-    }
-
-    public void setTotalCarbs(double totalCarbs) {
-        this.totalCarbs = totalCarbs;
-    }
-
-    public double getTotalProtein() {
-        return totalProtein;
-    }
-
-    public void setTotalProtein(double totalProtein) {
-        this.totalProtein = totalProtein;
-    }
-
-    public double getTotalFat() {
-        return totalFat;
-    }
-
-    public void setTotalFat(double totalFat) {
-        this.totalFat = totalFat;
-    }
-
-    public int getGoalCalories() {
-        return goalCalories;
-    }
-
-    public void setGoalCalories(int goalCalories) {
-        this.goalCalories = goalCalories;
-    }
-
-    public double getAchievementRate() {
-        return achievementRate;
-    }
-
-    public void setAchievementRate(double achievementRate) {
-        this.achievementRate = achievementRate;
-    }
-
-    // (디버깅/로그용}
-    @Override
-    public String toString() {
-        return "MonthlyStatisticsDto{" +
-                "year=" + year +
-                ", month=" + month +
-                ", totalCaloriesIn=" + totalCaloriesIn +
-                ", totalCaloriesOut=" + totalCaloriesOut +
-                ", netCalories=" + netCalories +
-                ", totalCarbs=" + totalCarbs +
-                ", totalProtein=" + totalProtein +
-                ", totalFat=" + totalFat +
-                ", goalCalories=" + goalCalories +
-                ", achievementRate=" + achievementRate +
-                '}';
-    }
 }
