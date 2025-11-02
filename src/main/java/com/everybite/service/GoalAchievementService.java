@@ -70,11 +70,10 @@ public class GoalAchievementService {
         return dto;
     }
 
-  // 스트릭 길이에 따른 아이콘 경로 선택(미확정)
-    private String getStreakIconUrl(int streak) {
-        if (streak >= 7) return "/icons/streak_fire.png"; // 7일 이상 연속 이미지
-        if (streak >= 3) return "/icons/streak_muscle.png"; // 3~6일 연속 이미지
-        if (streak >= 1) return "/icons/streak_leaf.png"; // 1~2일 연속 이미지
-        return "/icons/streak_none.png"; // 0일 -> 없음
+  private String getStreakIconUrl(int streak) {
+        if (streak >= 14) return "🙂"; // 14일 이상
+        if (streak >= 7) return "😃";  // 7~13일
+        if (streak >= 3) return "😆";  // 3~6일
+        return "?";					   // 0~2일: 기본 (미정)
     }
 }
