@@ -5,3 +5,5 @@ public enum ExerciseType {
     STRENGTH,   // 근력
     FLEXIBILITY // 스트레칭
 }
+
+// 수정 예정.
