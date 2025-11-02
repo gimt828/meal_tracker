@@ -52,8 +52,8 @@ public class StatisticsController {
     
     /**
      *  하루 통합 통계 API
-     * - 식단 섭취 칼로리 + 운동 소모 칼로리 + 잔여 칼로리 반환
-     * - 프론트엔드에서 그래프 표시용
+     *  식단 섭취 칼로리 + 운동 소모 칼로리 + 잔여 칼로리 반환
+     *  프론트엔드에서 그래프 표시용
      */
     @GetMapping("/daily")
     public DailyStatisticsDto getDailyStatistics(@RequestParam LocalDate date) {
