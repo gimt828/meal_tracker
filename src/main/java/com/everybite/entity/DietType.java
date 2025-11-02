@@ -20,4 +20,3 @@ public enum DietType {
     public double getFatRatio() { return fatRatio; }
 }
 
-// 운동 종류가 정해지면 고쳐야 함.
