@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.everybite.dto.DailyStatisticsDto;
 import com.everybite.dto.MonthlyStatisticsDto;
-import com.everybite.entity.ExerciseRecord;
+import com.everybite.entity.ExerciseRecord_DevA;
 import com.everybite.entity.MealIntakeRecord;
 import com.everybite.repository.ExerciseRecordRepository;
 import com.everybite.repository.MealIntakeRecordRepository;
@@ -17,13 +17,13 @@ import com.everybite.repository.UserGoalRepository;
 public class StatisticsService {
 
     private final MealIntakeRecordRepository mealRepo; // 섭취 기록 조회용
-    private final ExerciseRecordRepository exerciseRepo; // 운동 기록 조회용
-    private final UserGoalRepository userGoalRepo; // 사용자 목표 칼로리 조회용용
+    private final ExerciseRecordRepository_DevA exerciseRepo; // 운동 기록 조회용
+    private final UserGoalRepository_DevA userGoalRepo; // 사용자 목표 칼로리 조회용용
 
     // Lombok 제거 후 수동 생성자 주입
     public StatisticsService(MealIntakeRecordRepository mealRepo,
-                             ExerciseRecordRepository exerciseRepo,
-                             UserGoalRepository userGoalRepo) {
+                             ExerciseRecordRepository_DevA exerciseRepo,
+                             UserGoalRepository_DevA userGoalRepo) {
         this.mealRepo = mealRepo;
         this.exerciseRepo = exerciseRepo;
         this.userGoalRepo = userGoalRepo;
@@ -33,11 +33,11 @@ public class StatisticsService {
     public DailyStatisticsDto getDailyStatistics(LocalDate date, Long userId) {
         // 해당 날짜의 식사 기록과 운동 기록 조회
         List<MealIntakeRecord> meals = mealRepo.findByDate(date);
-        List<ExerciseRecord> exercises = exerciseRepo.findByDate(date);
+        List<ExerciseRecord_DevA> exercises = exerciseRepo.findByDate(date);
 
         // 스트림을 사용하여 합계 계산
         double totalIn = meals.stream().mapToDouble(MealIntakeRecord::getCalories).sum();
-        double totalOut = exercises.stream().mapToDouble(ExerciseRecord::getCalories_burned).sum();
+        double totalOut = exercises.stream().mapToDouble(ExerciseRecord_DevA::getCalories_burned).sum();
         double carbs = meals.stream().mapToDouble(MealIntakeRecord::getCarbohydrates).sum();
         double protein = meals.stream().mapToDouble(MealIntakeRecord::getProtein).sum();
         double fat = meals.stream().mapToDouble(MealIntakeRecord::getFat).sum();
@@ -71,11 +71,11 @@ public class StatisticsService {
 
         // 해당 월 범위의 식사/운동 기록 조회
         List<MealIntakeRecord> meals = mealRepo.findByDateBetween(start, end);
-        List<ExerciseRecord> exercises = exerciseRepo.findByDateBetween(start, end);
+        List<ExerciseRecord_DevA> exercises = exerciseRepo.findByDateBetween(start, end);
 
         //전체 합계 계산
         double totalIn = meals.stream().mapToDouble(MealIntakeRecord::getCalories).sum();
-        double totalOut = exercises.stream().mapToDouble(ExerciseRecord::getCalories_burned).sum();
+        double totalOut = exercises.stream().mapToDouble(ExerciseRecord_DevA::getCalories_burned).sum();
         double carbs = meals.stream().mapToDouble(MealIntakeRecord::getCarbohydrates).sum();
         double protein = meals.stream().mapToDouble(MealIntakeRecord::getProtein).sum();
         double fat = meals.stream().mapToDouble(MealIntakeRecord::getFat).sum();

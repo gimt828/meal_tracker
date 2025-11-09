@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 public class GoalAchievementService {
 
     private final MealIntakeRecordRepository mealIntakeRecordRepository;
-    private final UserGoalRepository userGoalRepository;
+    private final UserGoalRepository_DevA userGoalRepository;
 
     public GoalAchievementService(MealIntakeRecordRepository mealIntakeRecordRepository,
-                                  UserGoalRepository userGoalRepository) {
+                                  UserGoalRepository_DevA userGoalRepository) {
         this.mealIntakeRecordRepository = mealIntakeRecordRepository;
         this.userGoalRepository = userGoalRepository;
     }
