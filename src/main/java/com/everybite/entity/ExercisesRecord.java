@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "exercise_record")
-public class ExerciseRecord {
+public class ExercisesRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public class ExerciseRecord {
     private ExerciseType exercise_type; // 운동 종류(유산소, 근력 등)
 
     // 기본 생성자
-    public ExerciseRecord() {}
+    public ExercisesRecord() {}
 
     // 전체 필드 생성자
-    public ExerciseRecord(Long exercise_id, LocalDate date, String exercise_name,
+    public ExercisesRecord(Long exercise_id, LocalDate date, String exercise_name,
                           int duration_minutes, double calories_burned, ExerciseType exercise_type) {
         this.exercise_id = exercise_id;
         this.date = date;

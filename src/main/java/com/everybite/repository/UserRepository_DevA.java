@@ -1,4 +1,4 @@
-package com.everybite.responsitory;
+package com.everybite.repository;
 
 import com.everybite.entity.User_DevA; // 수정됨!
 import org.springframework.data.jpa.repository.JpaRepository;

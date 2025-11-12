@@ -2,7 +2,8 @@ package com.everybite.service;
 
 import com.everybite.dto.CreateUserRequest_DevA;
 import com.everybite.entity.User_DevA;
-import com.everybite.responsitory.UserRepository_DevA;
+import com.everybite.repository.UserRepository_DevA;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
