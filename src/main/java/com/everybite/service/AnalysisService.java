@@ -21,14 +21,13 @@ public class AnalysisService {
         this.mealIntakeRecordRepository = mealIntakeRecordRepository;
     }
 
-    // 1. 탄단지 비율 비교 (그래프 1)
+    // 1. 탄단지 비율 비교 
     public MacroRatioDto getDailyMacroRatio(LocalDate date, DietType dietType,
                                             Map<String, Double> customRatio) {
 
         Map<String, Double> recommended = (customRatio != null && !customRatio.isEmpty())
                 ? customRatio
                 : getDefaultRatio(dietType);
-        
         List<Object[]> result = mealIntakeRecordRepository.findDailyMacroSums(date);
         double carbs = 0, protein = 0, fat = 0;
         if (!result.isEmpty() && result.get(0)[0] != null) {
@@ -52,7 +51,7 @@ public class AnalysisService {
         return new MacroRatioDto(recommended, actual);
     }
 
-    // 2. 하루 칼로리 시각화 (그래프 2)
+    // 2. 하루 칼로리 시각화 
     public MealCaloriesDto getDailyMealCalories(LocalDate date, double goalCalories) {
         List<MealIntakeRecord> records = mealIntakeRecordRepository.findByDate(date);
 
@@ -71,17 +70,17 @@ public class AnalysisService {
         double totalConsumed = breakfast + lunch + dinner + snack;
         double remaining = Math.max(goalCalories - totalConsumed, 0);
 
-        List<ChartDateDto> meals = new ArrayList<>();
-        meals.add(new ChartDateDto("아침", breakfast));
-        meals.add(new ChartDateDto("점심", lunch));
-        meals.add(new ChartDateDto("저녁", dinner));
-        meals.add(new ChartDateDto("간식", snack));
-        meals.add(new ChartDateDto("남은 칼로리", remaining));
+        List<ChartDataDto> meals = new ArrayList<>();
+        meals.add(new ChartDataDto("아침", breakfast));
+        meals.add(new ChartDataDto("점심", lunch));
+        meals.add(new ChartDataDto("저녁", dinner));
+        meals.add(new ChartDataDto("간식", snack));
+        meals.add(new ChartDataDto("남은 칼로리", remaining));
 
         return new MealCaloriesDto(goalCalories, meals);
     }
 
-    // 식단 유형별 기본 비율 설정
+    // 기본 비율 설정 (기존 메서드 유지)
     private Map<String, Double> getDefaultRatio(DietType dietType) {
         Map<String, Double> ratio = new LinkedHashMap<>();
         switch (dietType) {
@@ -103,11 +102,12 @@ public class AnalysisService {
         }
         return ratio;
     }
-
-    // 3. 탄단지별 Kcal 막대 그래프 (그래프 3)
+ // 3. 탄단지별 kcal 막대 그래프
     public List<NutrientBarDto> getDailyNutrientBars(LocalDate date, double goalCalories, DietType dietType) {
+        // 1️) 식단 타입에 따른 기본 비율 불러오기
         Map<String, Double> ratio = getDefaultRatio(dietType);
 
+        // 2) DB에서 해당 날짜의 총 탄단지(g) 조회
         List<Object[]> result = mealIntakeRecordRepository.findDailyMacroSums(date);
         double carbs = 0, protein = 0, fat = 0;
         if (!result.isEmpty() && result.get(0)[0] != null) {
@@ -116,6 +116,7 @@ public class AnalysisService {
             fat = ((Number) result.get(0)[2]).doubleValue();
         }
 
+        // 3) 실제 섭취 kcal 계산
         double carbKcal = carbs * 4;
         double proteinKcal = protein * 4;
         double fatKcal = fat * 9;
@@ -124,6 +125,7 @@ public class AnalysisService {
         double proteinGoal = goalCalories * (ratio.get("단백질") / 100);
         double fatGoal = goalCalories * (ratio.get("지방") / 100);
 
+        // 5) DTO 리스트 구성
         List<NutrientBarDto> bars = new ArrayList<>();
         bars.add(new NutrientBarDto("탄수화물", carbKcal, carbGoal));
         bars.add(new NutrientBarDto("단백질", proteinKcal, proteinGoal));

@@ -31,7 +31,7 @@ public class StatisticsController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, // 쿼리스트랑(?date=...)을 LocalDate 타입으로 자동 변환.
             @RequestParam Long userId // {?userID=...) 파라미터를 Long 타입으로 받음.
     ) {
-        DailyStatisticsDto stats = statisticsService.getDailyStatistics(date, userId); // 하루 통계 데이터 조회.
+        DailyStatisticsDto stats = statisticsService.getDailyStatistics(date); // 하루 통계 데이터 조회.
         return ResponseEntity.ok(stats);
     }
 
@@ -45,7 +45,18 @@ public class StatisticsController {
             @RequestParam int month,
             @RequestParam Long userId
     ) {
-        MonthlyStatisticsDto stats = statisticsService.getMonthlyStatistics(year, month, userId);
+        MonthlyStatisticsDto stats = statisticsService.getMonthlyStatistics(year, month);
         return ResponseEntity.ok(stats);
+    }
+    
+    
+    /**
+     *  하루 통합 통계 API
+     *  식단 섭취 칼로리 + 운동 소모 칼로리 + 잔여 칼로리 반환
+     *  프론트엔드에서 그래프 표시용
+     */
+    @GetMapping("/daily")
+    public DailyStatisticsDto getDailyStatistics(@RequestParam LocalDate date) {
+        return statisticsService.getDailyStatistics(date);
     }
 }

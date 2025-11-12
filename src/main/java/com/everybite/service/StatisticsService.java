@@ -19,8 +19,8 @@ import com.everybite.repository.UserGoalRepository_DevA;
 public class StatisticsService {
 
     private final MealIntakeRecordRepository mealRepo;
-    private final ExerciseRecordRepository_DevA exerciseRepo;
-    private final UserGoalRepository_DevA userGoalRepo;
+    private final ExerciseRecordRepository exerciseRepo;
+    private final UserGoalRepository userGoalRepo;
 
     public StatisticsService(MealIntakeRecordRepository mealRepo,
                              ExerciseRecordRepository_DevA exerciseRepo,
@@ -30,70 +30,67 @@ public class StatisticsService {
         this.userGoalRepo = userGoalRepo;
     }
 
-    // 일간 통계 계산 로직
-    public DailyStatisticsDto getDailyStatistics(LocalDate date, Long userId) {
+    // 일간 통계 계산 (user_id 내부 고정)
+    public DailyStatisticsDto getDailyStatistics(LocalDate date) {
+        Long user_id = 1L; // ✅ 단일 사용자 구조에서는 내부에서 고정
+
         List<MealIntakeRecord> meals = mealRepo.findByDate(date);
         List<ExerciseRecord_DevA> exercises = exerciseRepo.findByDate(date);
 
-        double totalIn = meals.stream().mapToDouble(MealIntakeRecord::getCalories).sum();
-        // ✅ 수정됨: getCaloriesBurned() (카멜 표기법) 사용. 에러나면 getCalories_burned()로 변경.
-        double totalOut = exercises.stream().mapToDouble(ExerciseRecord_DevA::getCaloriesBurned).sum();
+        double total_in = meals.stream().mapToDouble(MealIntakeRecord::getCalories).sum();
+        double total_out = exercises.stream().mapToDouble(ExerciseRecord::getCalories_burned).sum();
         double carbs = meals.stream().mapToDouble(MealIntakeRecord::getCarbohydrates).sum();
         double protein = meals.stream().mapToDouble(MealIntakeRecord::getProtein).sum();
         double fat = meals.stream().mapToDouble(MealIntakeRecord::getFat).sum();
 
-        // ✅ 수정됨: UserGoal_DevA 사용 및 Optional 처리
-        UserGoal_DevA userGoal = userGoalRepo.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("Goal not found"));
-        int goalCalories = userGoal.getTargetCalories(); // ✅ 수정됨: getTargetCalories() 사용
-        double remainingCalories = goalCalories - totalIn;
+        int goal_calories = userGoalRepo.findByUserId(user_id).getTarget_calories();
+        double remaining_calories = goal_calories - total_in;
 
         DailyStatisticsDto dto = new DailyStatisticsDto();
         dto.setDate(date);
-        dto.setTotalCaloriesIn(totalIn);
-        dto.setTotalCaloriesOut(totalOut);
-        dto.setNetCalories(totalIn - totalOut);
-        dto.setTotalCarbs(carbs);
-        dto.setTotalProtein(protein);
-        dto.setTotalFat(fat);
-        dto.setGoalCalories(goalCalories);
-        dto.setRemainingCalories(remainingCalories);
+        dto.setTotal_calories_in(total_in);
+        dto.setTotal_calories_out(total_out);
+        dto.setNet_calories(total_in - total_out);
+        dto.setTotal_carbs(carbs);
+        dto.setTotal_protein(protein);
+        dto.setTotal_fat(fat);
+        dto.setGoal_calories(goal_calories);
+        dto.setRemaining_calories(remaining_calories);
 
         return dto;
     }
 
-    // 월간 통계 계산
-    public MonthlyStatisticsDto getMonthlyStatistics(int year, int month, Long userId) {
-        
+    // 월간 통계 계산 (단일 사용자 구조)
+    public MonthlyStatisticsDto getMonthlyStatistics(int year, int month) {
+        Long user_id = 1L; // ✅ 기본 사용자 고정
+
         LocalDate start = LocalDate.of(year, month, 1);
         LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
 
         List<MealIntakeRecord> meals = mealRepo.findByDateBetween(start, end);
         List<ExerciseRecord_DevA> exercises = exerciseRepo.findByDateBetween(start, end);
 
-        double totalIn = meals.stream().mapToDouble(MealIntakeRecord::getCalories).sum();
-        // ✅ 수정됨: getCaloriesBurned() 사용
-        double totalOut = exercises.stream().mapToDouble(ExerciseRecord_DevA::getCaloriesBurned).sum();
+        double total_in = meals.stream().mapToDouble(MealIntakeRecord::getCalories).sum();
+        double total_out = exercises.stream().mapToDouble(ExerciseRecord::getCalories_burned).sum();
         double carbs = meals.stream().mapToDouble(MealIntakeRecord::getCarbohydrates).sum();
         double protein = meals.stream().mapToDouble(MealIntakeRecord::getProtein).sum();
         double fat = meals.stream().mapToDouble(MealIntakeRecord::getFat).sum();
 
-        // ✅ 수정됨: UserGoal_DevA 사용 및 Optional 처리
-        UserGoal_DevA userGoal = userGoalRepo.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("Goal not found"));
-        int goalCalories = userGoal.getTargetCalories(); // ✅ 수정됨: getTargetCalories() 사용
-        int daysInMonth = start.lengthOfMonth();
-        double achievement = (totalIn / (goalCalories * daysInMonth)) * 100.0;
+        int goal_calories = userGoalRepo.findByUserId(user_id).getTarget_calories();
+        int days_in_month = start.lengthOfMonth();
+        double achievement = (total_in / (goal_calories * days_in_month)) * 100.0;
 
         MonthlyStatisticsDto dto = new MonthlyStatisticsDto();
         dto.setYear(year);
         dto.setMonth(month);
-        dto.setTotalCaloriesIn(totalIn);
-        dto.setTotalCaloriesOut(totalOut);
-        dto.setNetCalories(totalIn - totalOut);
-        dto.setTotalCarbs(carbs);
-        dto.setTotalProtein(protein);
-        dto.setTotalFat(fat);
-        dto.setGoalCalories(goalCalories);
-        dto.setAchievementRate(Math.round(achievement * 10) / 10.0);
+        dto.setTotal_calories_in(total_in);
+        dto.setTotal_calories_out(total_out);
+        dto.setNet_calories(total_in - total_out);
+        dto.setTotal_carbs(carbs);
+        dto.setTotal_protein(protein);
+        dto.setTotal_fat(fat);
+        dto.setGoal_calories(goal_calories);
+        dto.setAchievement_rate(Math.round(achievement * 10) / 10.0);
 
         return dto;
     }

@@ -89,7 +89,7 @@ public class UserGoal {
         this.user_id = user_id;
     }
 
-    // (디버깅/로그용)
+    // Optional: toString() (로그 확인용)
     @Override
     public String toString() {
         return "UserGoal{" +
@@ -101,4 +101,52 @@ public class UserGoal {
                 ", user_id=" + user_id +
                 '}';
     }
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DietType dietType; // 추천 로직에 쓰일 코드 추가
+    
+    public DietType getDietType() {
+        return dietType;
+    }
+
+    public void setDietType(DietType dietType) {
+        this.dietType = dietType;
+    }
+    
+    
+    @Column(nullable = false)
+    private double target_carb_ratio;
+
+    @Column(nullable = false)
+    private double target_protein_ratio;
+
+    @Column(nullable = false)
+    private double target_fat_ratio;
+
+    // Getter / Setter
+    public double getTarget_carb_ratio() {
+        return target_carb_ratio;
+    }
+
+    public void setTarget_carb_ratio(double target_carb_ratio) {
+        this.target_carb_ratio = target_carb_ratio;
+    }
+
+    public double getTarget_protein_ratio() {
+        return target_protein_ratio;
+    }
+
+    public void setTarget_protein_ratio(double target_protein_ratio) {
+        this.target_protein_ratio = target_protein_ratio;
+    }
+
+    public double getTarget_fat_ratio() {
+        return target_fat_ratio;
+    }
+
+    public void setTarget_fat_ratio(double target_fat_ratio) {
+        this.target_fat_ratio = target_fat_ratio;
+    }
+
 }

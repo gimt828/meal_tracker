@@ -1,4 +1,4 @@
-package com.everybite.repository
+package com.everybite.repository;
 
 import com.everybite.entity.ExerciseRecord_DevA;
 import org.springframework.data.jpa.repository.JpaRepository;
