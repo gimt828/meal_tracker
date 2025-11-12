@@ -5,10 +5,9 @@ import com.everybite.dto.CreateMealRecordRequest_DevA;
 import com.everybite.entity.ExerciseRecord_DevA;
 import com.everybite.entity.MealRecord_DevA;
 import com.everybite.entity.User_DevA;
-import com.everybite.repository.ExerciseRecordRepository_DevA;
-import com.everybite.repository.MealRecordRepository_DevA;
-import com.everybite.repository.UserRepository_DevA;
-
+import com.everybite.repository.ExerciseRecordRepository_DevA; // ⚠️ 폴더명 repository가 맞는지 확인!
+import com.everybite.repository.MealRecordRepository_DevA;   // ⚠️ 폴더명 repository가 맞는지 확인!
+import com.everybite.repository.UserRepository_DevA;     // ⚠️ 폴더명 repository가 맞는지 확인!
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +67,7 @@ public class RecordService_DevA {
     @Transactional
     public void deleteMealRecord(Long recordId) {
         if (!mealRecordRepository.existsById(recordId)) {
-            throw new IllegalArgumentException("Meal record not found with id: " + recordId);
+            throw new IllegalArgumentException("Meal record not found with id: "D" + recordId);
         }
         mealRecordRepository.deleteById(recordId);
     }
@@ -84,7 +83,23 @@ public class RecordService_DevA {
         newRecord.setUser(user);
         newRecord.setExerciseName(request.getExerciseName());
         newRecord.setDurationMinutes(request.getDurationMinutes());
-        newRecord.setCaloriesBurned(request.getCaloriesBurned());
+
+        // --- ⬇️ 여기가 수정되었습니다! ⬇️ ---
+        // newRecord.setCaloriesBurned(request.getCaloriesBurned()); // DTO에서 필드 삭제했으므로 이 줄 삭제!
+
+        // (새로 추가할 계산 로직 - 아주 간단한 예시!)
+        // 예: 걷기는 1분당 3.5 칼로리, 달리기는 1분당 7 칼로리 소모한다고 가정
+        double calories = 0;
+        if ("걷기".equals(request.getExerciseName())) {
+            calories = request.getDurationMinutes() * 3.5;
+        } else if ("달리기".equals(request.getExerciseName())) {
+            calories = request.getDurationMinutes() * 7.0;
+        } else {
+            // 모르는 운동은 일단 시간당 5 칼로리 소모로 기본값 설정 (나중에 수정 필요)
+            calories = request.getDurationMinutes() * 5.0; 
+        }
+        newRecord.setCaloriesBurned(calories); // 계산된 칼로리 저장
+        // --- ⬆️ 여기까지 수정되었습니다! ⬆️ ---
 
         return exerciseRecordRepository.save(newRecord);
     }
@@ -104,7 +119,21 @@ public class RecordService_DevA {
 
         record.setExerciseName(request.getExerciseName());
         record.setDurationMinutes(request.getDurationMinutes());
-        record.setCaloriesBurned(request.getCaloriesBurned());
+        
+        // --- ⬇️ 여기도 수정되었습니다! (수정 시에도 칼로리 재계산) ⬇️ ---
+        // newRecord.setCaloriesBurned(request.getCaloriesBurned()); // DTO에 필드 없음!
+
+        // (계산 로직 추가)
+        double calories = 0;
+        if ("걷기".equals(request.getExerciseName())) {
+            calories = request.getDurationMinutes() * 3.5;
+        } else if ("달리기".equals(request.getExerciseName())) {
+            calories = request.getDurationMinutes() * 7.0;
+        } else {
+            calories = request.getDurationMinutes() * 5.0; 
+        }
+        record.setCaloriesBurned(calories); // 계산된 칼로리 저장
+        // --- ⬆️ 여기까지 수정되었습니다! ⬆️ ---
 
         return exerciseRecordRepository.save(record);
     }
@@ -114,6 +143,6 @@ public class RecordService_DevA {
         if (!exerciseRecordRepository.existsById(recordId)) {
             throw new IllegalArgumentException("Exercise record not found with id: " + recordId);
         }
-        exerciseRecordRepository.deleteById(recordId); // 이 부분이 빠져 있었어요!
+        exerciseRecordRepository.deleteById(recordId);
     }
-} 
+}

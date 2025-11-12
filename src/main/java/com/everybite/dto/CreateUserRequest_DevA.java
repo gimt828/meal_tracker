@@ -1,4 +1,4 @@
-package com.everybite.dto;
+package com.everybite.dto; 
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +12,6 @@ public class CreateUserRequest_DevA {
     private Double weight;
     private LocalDate birthDate;
     private String gender;
-    private String dietGoal; // ✅ 이 필드를 추가했습니다.
+    private String dietGoal;
+    private String activityLevel; 
 }

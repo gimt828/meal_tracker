@@ -1,4 +1,4 @@
-package com.everybite.dto; // 본인 패키지 경로 확인
+package com.everybite.dto; // ✅ 패키지명 확인!
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,4 +14,9 @@ public class CreateUserGoalRequest_DevA {
     private Integer targetCalories;
     private LocalDate startDate;
     private LocalDate endDate;
+    
+    private String dietType; // "DIET", "BULK_UP" 등
+    private Double customCarbRatio;
+    private Double customProteinRatio;
+    private Double customFatRatio;
 }
